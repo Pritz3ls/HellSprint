@@ -1,18 +1,48 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public int MAXHEALTH = 3;
+    int HEALTH;
+    public int SCORE = 1;
+    public Color HURT_COLOR;
+    Material OBJ_MAT;
+    void Start(){
+        Renderer renderer = GetComponentInChildren<Renderer>();
+        OBJ_MAT = renderer.material;
+        HEALTH = MAXHEALTH;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DAMAGE(int damage){
+        HEALTH -= damage;
+        if(HEALTH > 0){
+            if(gameObject.activeSelf){
+                StopCoroutine(FlashCoroutine());
+                StartCoroutine(FlashCoroutine());
+            }
+        }else{DEATH();}
+    }
+    void OnCollisionEnter(Collision col){
+        if(col.gameObject.tag == "Player"){
+            Debug.Log("GameOver");
+        }
+    }
+    void DEATH(){
+        // ADD SCORE
+        HEALTH = MAXHEALTH;
+        OBJ_MAT.SetColor("_Color", Color.white);
+        ParticleManager.instance.Spawn(transform.position);
+        gameObject.SetActive(false);
+    }
+    IEnumerator FlashCoroutine()
     {
-        
+        float duration = 0.2f;
+        while(duration > 0){
+            duration -= Time.deltaTime;
+            OBJ_MAT.SetColor("_Color", HURT_COLOR);
+            yield return null;
+        }
+        OBJ_MAT.SetColor("_Color", Color.white);
     }
 }
