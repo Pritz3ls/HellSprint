@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     }
     void OnCollisionEnter(Collision col){
         if(col.gameObject.tag == "Player"){
-            Debug.Log("GameOver");
+            Player_Movement.instance.Death();
         }
     }
     void DEATH(){

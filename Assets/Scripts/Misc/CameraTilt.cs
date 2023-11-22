@@ -7,6 +7,7 @@ public class CameraTilt : MonoBehaviour{
     // float maxRot = -5.0f;
     float rate = 2.0f;
     void Update(){
+        if(GameManager.instance.GAMEOVER){this.enabled = false;}
         LeanCamera(Input.GetAxis("Horizontal"));
     }
     public void LeanCamera(float axis)

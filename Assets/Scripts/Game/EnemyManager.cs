@@ -18,6 +18,7 @@ public class EnemyManager : MonoBehaviour{
     }
     // Prototype spawning mechanic, will resort to other creature handling this
     void Spawn(){
+        if(GameManager.instance.GAMEOVER){return;}
         for (int i = 0; i < WAVEMODIFIER; i++){    
             GameObject obj = SPAWNPOOL.ReSpawnPrefab();
             if(obj != null){

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Skull : MonoBehaviour{
     public float MOVESPEED;
     public float ROTATIONSPEED;

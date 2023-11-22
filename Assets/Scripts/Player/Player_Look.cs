@@ -12,14 +12,14 @@ public class Player_Look : MonoBehaviour
     public Weapon weapon;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.instance.GAMEOVER){this.enabled = false;}
         float mouseX = Input.GetAxis("Mouse X") * MOUSE_SENSITIVITY * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * MOUSE_SENSITIVITY * Time.deltaTime;
 

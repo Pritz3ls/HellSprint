@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
+    public static Player_Movement instance;
     public CharacterController CCONTROLLER_COMPONENT;
+    public GameObject Weapon_Holder;
+    public Transform GROUND_CHECK;
+    public LayerMask GROUND_MASK;
+    public float GROUND_DISTANCE = 0.4f;
     public float MOVEMENT_SPEED;
     public float GRAVITY = -9.81f;
     public float JUMP = 3f;
 
-    public Transform GROUND_CHECK;
-    public float GROUND_DISTANCE = 0.4f;
-    public LayerMask GROUND_MASK;
 
     float SPEED;
     float SPEEDFOV = 95;
@@ -21,6 +23,7 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Start(){
         SPEED = MOVEMENT_SPEED;
+        instance = this;
     }
     void Update()
     {
@@ -50,5 +53,11 @@ public class Player_Movement : MonoBehaviour
 
         velocity.y += GRAVITY * Time.deltaTime;
         CCONTROLLER_COMPONENT.Move(velocity * Time.deltaTime);
+    }
+    public void Death(){
+        CCONTROLLER_COMPONENT.enabled = false;
+        GameManager.instance.SETGAMEOVER();
+        Weapon_Holder.SetActive(false);
+        this.enabled = false;
     }
 }
