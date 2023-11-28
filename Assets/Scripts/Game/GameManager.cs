@@ -11,13 +11,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour{
     public static GameManager instance;
     public string SESSION_NAME;
+    public Image IMG_LOAD;
     public Image IMG_FADE;
     public GameObject TEXT_LEADERBOARD;
     public GameObject BTN_RESTART;
+    public GameObject BTN_MAINMENU;
     public TextMeshProUGUI TEXT_FINALTIME;
     public TextMeshProUGUI TEXT_SESSIONNAME;
     public bool GAMEOVER = false;
-
+    public bool inSESSION = false;
     [Header("Leaderboard")]
     public List<GameObject> LEADERBOARD = new List<GameObject>();
     void Start(){
@@ -46,6 +48,12 @@ public class GameManager : MonoBehaviour{
         
         TEXT_FINALTIME.gameObject.SetActive(GAMEOVER);
         TEXT_SESSIONNAME.gameObject.SetActive(GAMEOVER);
+
+        if(!GAMEOVER){
+            BTN_MAINMENU.SetActive(GAMEOVER);
+            BTN_RESTART.SetActive(GAMEOVER);
+            TEXT_LEADERBOARD.gameObject.SetActive(GAMEOVER);
+        }
         
         while (time < duration){
             time += Time.deltaTime;
@@ -54,6 +62,7 @@ public class GameManager : MonoBehaviour{
         }
 
         BTN_RESTART.SetActive(GAMEOVER);
+        BTN_MAINMENU.SetActive(GAMEOVER);
         TEXT_LEADERBOARD.gameObject.SetActive(GAMEOVER);
 
         if(GAMEOVER){RefreshLeaderBoard();}
@@ -69,10 +78,46 @@ public class GameManager : MonoBehaviour{
         }
     }
     public void LoadMainMenu(){
+        GAMEOVER = false;
+        StartCoroutine("LoadScene", 0);
+    }
+    public void LoadPlay(){
+        GAMEOVER = false;
+        StartCoroutine("LoadScene", 1);
     }
     public void Restart(){
         GAMEOVER = false;
         StartCoroutine("Fade");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    IEnumerator LoadScene(int indx){
+        float time = 0f;
+        float duration = .75f;
+        float alpha = 1f;
+        Color FadeInColor = new Color(IMG_FADE.color.r,IMG_FADE.color.g,IMG_FADE.color.b, alpha);
+        Color FadeOutColor = new Color(IMG_FADE.color.r,IMG_FADE.color.g,IMG_FADE.color.b, 0f);
+        
+        TEXT_SESSIONNAME.gameObject.SetActive(GAMEOVER);
+        TEXT_FINALTIME.gameObject.SetActive(GAMEOVER);
+        BTN_MAINMENU.SetActive(GAMEOVER);
+        BTN_RESTART.SetActive(GAMEOVER);
+        TEXT_LEADERBOARD.gameObject.SetActive(GAMEOVER);
+
+        while (time < duration){
+            time += Time.deltaTime;
+            IMG_LOAD.color = Color.Lerp(IMG_FADE.color, FadeInColor, time / duration);
+            yield return null;
+        }
+        
+        yield return new WaitUntil(()=> IMG_LOAD.color.a == 1f);
+        IMG_FADE.color = FadeOutColor;
+        SceneManager.LoadScene(indx);
+        time = 0f;
+
+        while (time < duration){
+            time += Time.deltaTime;
+            IMG_LOAD.color = Color.Lerp(IMG_LOAD.color, FadeOutColor, time / duration);
+            yield return null;
+        }
     }
 }

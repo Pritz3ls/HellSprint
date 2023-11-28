@@ -13,11 +13,12 @@ public class Weapon : MonoBehaviour{
     private float NEXT_TIME_FIRE = 0f;
 
     public void SHOOT(){
+        if(!gameObject.activeInHierarchy){return;}
         if(Time.time >= NEXT_TIME_FIRE){
             NEXT_TIME_FIRE = Time.time + 1f/FIRERATE;
             SHOOT_EFFECTS.Play();
             animator.Play("weapon_shoot_anim");
-
+            SoundManager.instance.PLAY_PLAYER_SHOOT();
             RaycastHit hit;
             if(Physics.Raycast(MAINCAMERA.transform.position, MAINCAMERA.transform.forward, out hit, 100, RAYCASTHITONLY)){
                 TrailRenderer trail = Instantiate(NAILTRAIL, WEAPONPOINT.position, Quaternion.identity);

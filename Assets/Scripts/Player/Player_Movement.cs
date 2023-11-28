@@ -57,6 +57,7 @@ public class Player_Movement : MonoBehaviour
     public void Death(){
         CCONTROLLER_COMPONENT.enabled = false;
         GameManager.instance.SETGAMEOVER();
+        SoundManager.instance.PLAY_PLAYER_DEATH();
         Weapon_Holder.SetActive(false);
         this.enabled = false;
     }

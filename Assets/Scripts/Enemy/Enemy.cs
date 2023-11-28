@@ -29,14 +29,13 @@ public class Enemy : MonoBehaviour
         }
     }
     void DEATH(){
-        // ADD SCORE
         HEALTH = MAXHEALTH;
         OBJ_MAT.SetColor("_Color", Color.white);
         ParticleManager.instance.Spawn(transform.position);
+        SoundManager.instance.PLAY_ENEMY_DEATH();
         gameObject.SetActive(false);
     }
-    IEnumerator FlashCoroutine()
-    {
+    IEnumerator FlashCoroutine(){
         float duration = 0.2f;
         while(duration > 0){
             duration -= Time.deltaTime;
