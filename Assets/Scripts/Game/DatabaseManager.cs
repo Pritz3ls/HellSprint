@@ -24,6 +24,7 @@ public class DatabaseManager : MonoBehaviour{
             connection.Open();
             // Setup a command control to allow Database controls
             using(var command = connection.CreateCommand()){
+                // Create a table if not exists
                 command.CommandText = "CREATE TABLE IF NOT EXISTS LEADERBOARDS (username VARCHAR(20), usertime FLOAT);";
                 command.ExecuteNonQuery();
             }
@@ -50,6 +51,7 @@ public class DatabaseManager : MonoBehaviour{
             connection.Open();
             // Setup a command control to allow Database controls
             using(var command = connection.CreateCommand()){
+                // Select a maximum of 10 players from the leaderboard and delete the excess
                 command.CommandText = "DELETE FROM LEADERBOARDS WHERE usertime NOT IN (SELECT usertime FROM LEADERBOARDS ORDER BY usertime DESC LIMIT 10);";
                 command.ExecuteNonQuery();
             }
@@ -63,7 +65,7 @@ public class DatabaseManager : MonoBehaviour{
             connection.Open();
             // Setup a command control to allow Database controls
             using(var command = connection.CreateCommand()){
-                command.CommandText = "SELECT * FROM LEADERBOARDS ORDER BY usertime DESC;";
+                command.CommandText = "SELECT * FROM LEADERBOARDS ORDER BY usertime DESC;"; 
                 using(IDataReader reader = command.ExecuteReader()){
                     while(reader.Read()){
                         // Lets display it on the console for now
@@ -83,6 +85,7 @@ public class DatabaseManager : MonoBehaviour{
             connection.Open();
             // Setup a command control to allow Database controls
             using(var command = connection.CreateCommand()){
+                // Delete the table Leaderboard
                 command.CommandText = "DELETE FROM LEADERBOARDS;";
                 command.ExecuteNonQuery();
             }

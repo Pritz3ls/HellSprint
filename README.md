@@ -1,2 +1,2 @@
 # HellSprint
-Fast Paced first person shooter where one aims to survive through an increasing difficulty of swarms of enemies.
+HellSprint is a Fast Paced first person shooter where one aims to survive through an increasing difficulty of swarms of enemies. Survive long enough and gain a ranking in the leaderboard, and prove you’re the best player out there.
