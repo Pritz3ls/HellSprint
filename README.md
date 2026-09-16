@@ -1,5 +1,5 @@
 # HellSprint
-HellSprint is a Fast Paced first person shooter where one aims to survive through an increasing difficulty of swarms of enemies. Survive long enough and gain a ranking in the leaderboard, and prove you’re the best player out there.
+HellSprint is a PSX-Styled fast paced first person shooter where one aims to survive through an increasing difficulty of swarms of enemies. Survive long enough and gain a ranking in the leaderboard, and prove you’re the best player out there.
 
 # How to install
 Download the latest release
